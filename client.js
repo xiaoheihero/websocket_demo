@@ -3,7 +3,8 @@ var WebSocketClient = require('websocket').client;
 var client = new WebSocketClient();
 var config = {
     "host": "127.0.0.1",
-    "port": "3060"
+    "port": "3060",
+    "timeout": 1000
 };
 client.on('connectFailed', function(error) {
     console.log('Connect Error: ' + error.toString());
@@ -28,7 +29,7 @@ client.on('connect', function(connection) {
             var number = Math.round(Math.random() * 0xFFFFFF);
             console.log("Send: '" + number + "'");
             connection.sendUTF(number.toString());
-            setTimeout(sendNumber, 1000);
+            setTimeout(sendNumber, config.timeout);
         }
     }
     sendNumber();
